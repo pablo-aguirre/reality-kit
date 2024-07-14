@@ -7,7 +7,6 @@
 
 import SwiftUI
 import RealityKit
-import AVFoundation
 
 struct ContentView : View {
     var body: some View {
@@ -19,10 +18,17 @@ struct ARViewContainer: UIViewRepresentable {
     
     func makeUIView(context: Context) -> ARView {
         let arView = ARView(frame: .zero)
+        arView.addGestureRecognizer(UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.handleTap)))
+        
+        let planeAnchor = AnchorEntity(plane: .horizontal)
+        let planeModel = ModelEntity(mesh: .generatePlane(width: 0.5, depth: 0.5), materials: [SimpleMaterial(color: .red, isMetallic: false)])
+        planeModel.physicsBody = .init(material: .generate(), mode: .static)
+        planeModel.generateCollisionShapes(recursive: true)
+        
+        planeAnchor.addChild(planeModel)
+        arView.scene.addAnchor(planeAnchor)
         
         context.coordinator.view = arView
-        context.coordinator.setup()
-        
         return arView
     }
     
