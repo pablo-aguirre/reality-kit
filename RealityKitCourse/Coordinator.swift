@@ -8,36 +8,24 @@
 import Foundation
 import ARKit
 import RealityKit
-import Combine
 
 class Coordinator {
     
-    weak var view: ARView?
-    private var cancellable: AnyCancellable?
-    
+    var view: ARView?
     
     func setup() {
         guard let view = self.view else { return }
         
         let anchor = AnchorEntity(plane: .horizontal)
+        let mesh = MeshResource.generateBox(size: 0.1)
+        let box = ModelEntity(mesh: mesh)
         
-        let material = OcclusionMaterial()
-        let box = ModelEntity(mesh: .generateBox(size: 0.3), materials: [material])
-        box.generateCollisionShapes(recursive: true)
-        view.installGestures(for: box)
-        
-        cancellable = ModelEntity.loadAsync(named: "robot").sink(
-            receiveCompletion: { completion in
-                if case let .failure(error) = completion {
-                    fatalError("Unable to load model \(error)")
-                }
-                
-                self.cancellable?.cancel()
-            },
-            receiveValue: { entity in
-                anchor.addChild(entity)
-            }
-        )
+        if let texture = try? TextureResource.load(named: "purple_flower") {
+            var material = UnlitMaterial()
+            material.color = .init(tint: .white, texture: .init(texture))
+            
+            box.model?.materials = [material]
+        }
         
         anchor.addChild(box)
         view.scene.addAnchor(anchor)
