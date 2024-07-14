@@ -22,7 +22,6 @@ struct ARViewContainer: UIViewRepresentable {
         arView.addGestureRecognizer(UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.handleTap)))
         
         context.coordinator.view = arView
-        arView.session.delegate = context.coordinator
 
         let anchor = AnchorEntity(plane: .horizontal)
         let box = ModelEntity(mesh: .generateBox(size: 0.1), materials: [SimpleMaterial(color: .red, isMetallic: false)])
