@@ -20,13 +20,12 @@ class Coordinator {
         let results = view.raycast(from: tapLocation, allowing: .estimatedPlane, alignment: .horizontal)
         
         if let result = results.first {
-            let anchorEntity = AnchorEntity(raycastResult: result)
-            let modelEntity = ModelEntity(mesh: .generateBox(size: 0.1), materials: [SimpleMaterial(color: .random(), isMetallic: false)])
-            modelEntity.generateCollisionShapes(recursive: true)
-            anchorEntity.addChild(modelEntity)
+            let anchor = AnchorEntity(raycastResult: result)
             
-            view.scene.addAnchor(anchorEntity)
-            view.installGestures(.all, for: modelEntity)
+            guard let model = try? ModelEntity.load(named: "robot") else { fatalError("Model not found!") }
+            
+            anchor.addChild(model)
+            view.scene.addAnchor(anchor)
         }
     }
 }
