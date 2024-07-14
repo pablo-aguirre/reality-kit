@@ -16,6 +16,7 @@
 		6E68BAE02C43C69300BF4357 /* robot.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 6E68BADF2C43C69300BF4357 /* robot.usdz */; };
 		6E68BAE22C43CDF700BF4357 /* sneaker.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 6E68BAE12C43CDF700BF4357 /* sneaker.usdz */; };
 		6E68BAE42C43D0EC00BF4357 /* LunarRover.reality in Resources */ = {isa = PBXBuildFile; fileRef = 6E68BAE32C43D0A400BF4357 /* LunarRover.reality */; };
+		6E68BAE62C43FD4700BF4357 /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 6E68BAE52C43FD4200BF4357 /* video.mp4 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		6E68BADF2C43C69300BF4357 /* robot.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = robot.usdz; sourceTree = "<group>"; };
 		6E68BAE12C43CDF700BF4357 /* sneaker.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = sneaker.usdz; sourceTree = "<group>"; };
 		6E68BAE32C43D0A400BF4357 /* LunarRover.reality */ = {isa = PBXFileReference; lastKnownFileType = file; path = LunarRover.reality; sourceTree = "<group>"; };
+		6E68BAE52C43FD4200BF4357 /* video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = video.mp4; path = ../../video.mp4; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 				6E68BADF2C43C69300BF4357 /* robot.usdz */,
 				6E68BAE12C43CDF700BF4357 /* sneaker.usdz */,
 				6E68BAE32C43D0A400BF4357 /* LunarRover.reality */,
+				6E68BAE52C43FD4200BF4357 /* video.mp4 */,
 			);
 			path = RealityKitCourse;
 			sourceTree = "<group>";
@@ -141,6 +144,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6E68BAD52C439FFB00BF4357 /* Preview Assets.xcassets in Resources */,
+				6E68BAE62C43FD4700BF4357 /* video.mp4 in Resources */,
 				6E68BAE22C43CDF700BF4357 /* sneaker.usdz in Resources */,
 				6E68BAE02C43C69300BF4357 /* robot.usdz in Resources */,
 				6E68BAE42C43D0EC00BF4357 /* LunarRover.reality in Resources */,
