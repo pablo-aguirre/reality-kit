@@ -15,29 +15,31 @@ class Coordinator {
     weak var view: ARView?
     private var cancellable: AnyCancellable?
     
-    @objc func handleTap(_ recognizer: UITapGestureRecognizer) {
-        guard let view = self.view,
-              view.scene.anchors.first(where: { $0.name == "LunarRoverAnchor" }) == nil else { return }
+    
+    func setup() {
+        guard let view = self.view else { return }
         
-        let tapLocation = recognizer.location(in: view)
-        let results = view.raycast(from: tapLocation, allowing: .estimatedPlane, alignment: .horizontal)
+        let anchor = AnchorEntity(plane: .horizontal)
         
-        if let result = results.first {
-            let anchor = AnchorEntity(raycastResult: result)
-            
-            cancellable = ModelEntity.loadAsync(named: "LunarRover")
-                .sink { loadCompletion in
-                    if case let .failure(error) = loadCompletion {
-                        print("Unable to load model \(error).")
-                    }
-                    
-                    self.cancellable?.cancel()
-                } receiveValue: { entity in
-                    anchor.name = "LunarRoverAnchor"
-                    anchor.addChild(entity)
+        let material = OcclusionMaterial()
+        let box = ModelEntity(mesh: .generateBox(size: 0.3), materials: [material])
+        box.generateCollisionShapes(recursive: true)
+        view.installGestures(for: box)
+        
+        cancellable = ModelEntity.loadAsync(named: "robot").sink(
+            receiveCompletion: { completion in
+                if case let .failure(error) = completion {
+                    fatalError("Unable to load model \(error)")
                 }
-            
-            view.scene.addAnchor(anchor)
-        } 
+                
+                self.cancellable?.cancel()
+            },
+            receiveValue: { entity in
+                anchor.addChild(entity)
+            }
+        )
+        
+        anchor.addChild(box)
+        view.scene.addAnchor(anchor)
     }
 }
