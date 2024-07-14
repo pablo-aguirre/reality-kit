@@ -22,9 +22,11 @@ class Coordinator {
         if let result = results.first {
             let anchorEntity = AnchorEntity(raycastResult: result)
             let modelEntity = ModelEntity(mesh: .generateBox(size: 0.1), materials: [SimpleMaterial(color: .random(), isMetallic: false)])
+            modelEntity.generateCollisionShapes(recursive: true)
             anchorEntity.addChild(modelEntity)
             
             view.scene.addAnchor(anchorEntity)
+            view.installGestures(.all, for: modelEntity)
         }
     }
 }
