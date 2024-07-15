@@ -20,13 +20,13 @@ struct ARViewContainer: UIViewRepresentable {
         let arView = ARView(frame: .zero)
         arView.addGestureRecognizer(UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.handleTap)))
         
-        let planeAnchor = AnchorEntity(plane: .horizontal)
-        let planeModel = ModelEntity(mesh: .generatePlane(width: 0.5, depth: 0.5), materials: [SimpleMaterial(color: .red, isMetallic: false)])
-        planeModel.physicsBody = .init(material: .generate(), mode: .static)
-        planeModel.generateCollisionShapes(recursive: true)
+        let floorAnchor = AnchorEntity(plane: .horizontal)
+        let floorModel = ModelEntity(mesh: .generateBox(size: [1000, 0, 1000]), materials: [OcclusionMaterial()])
+        floorModel.physicsBody = .init(material: .generate(), mode: .static)
+        floorModel.generateCollisionShapes(recursive: true)
         
-        planeAnchor.addChild(planeModel)
-        arView.scene.addAnchor(planeAnchor)
+        floorAnchor.addChild(floorModel) 
+        arView.scene.addAnchor(floorAnchor)
         
         context.coordinator.view = arView
         return arView

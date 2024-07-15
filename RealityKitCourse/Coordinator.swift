@@ -8,10 +8,12 @@
 import Foundation
 import ARKit
 import RealityKit
+import Combine
 
 class Coordinator {
     
     var view: ARView?
+    private var collisionSubscriptions = [Cancellable]()
     
     @objc func handleTap(_ recognizer: UITapGestureRecognizer) {
         guard let view = self.view else { return }
@@ -20,12 +22,22 @@ class Coordinator {
         if let result = view.raycast(from: tapLocation, allowing: .estimatedPlane, alignment: .horizontal).first {
             let anchorEntity = AnchorEntity(raycastResult: result)
             
-            let boxEntity = ModelEntity(mesh: .generateBox(size: 0.1), materials: [SimpleMaterial()])
-            boxEntity.physicsBody = .init(massProperties: .default, material: .generate(), mode: .dynamic)
-            boxEntity.generateCollisionShapes(recursive: true)
+            let boxModel = ModelEntity(mesh: .generateBox(size: 0.05), materials: [SimpleMaterial(color: .green, isMetallic: false)])
+            boxModel.position.y = 0.3
+            boxModel.generateCollisionShapes(recursive: true)
+            boxModel.physicsBody = .init(massProperties: .default, material: .generate(), mode: .dynamic)
             
-            boxEntity.position = simd_make_float3(0, 0.7, 0)
-            anchorEntity.addChild(boxEntity)
+            boxModel.collision = .init(shapes: [.generateBox(size: [0.05, 0.05, 0.05])], mode: .trigger, filter: .sensor)
+            
+            collisionSubscriptions.append(view.scene.subscribe(to: CollisionEvents.Began.self) { event in
+                boxModel.model?.materials = [SimpleMaterial(color: .red, isMetallic: false)]
+            })
+            
+            collisionSubscriptions.append(view.scene.subscribe(to: CollisionEvents.Ended.self) { event in
+                boxModel.model?.materials = [SimpleMaterial(color: .green, isMetallic: false)]
+            })
+            
+            anchorEntity.addChild(boxModel)
             view.scene.addAnchor(anchorEntity)
         }
         
