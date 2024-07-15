@@ -12,30 +12,40 @@ import Combine
 class Coordinator {
     
     weak var view: ARView?
-    var collisionSubscriptions = [Cancellable]()
+    private var collisionSubscriptions = [Cancellable]()
+    
+    private let boxGroup = CollisionGroup(rawValue: 1 << 0)
+    private let sphereGoup = CollisionGroup(rawValue: 1 << 1)
     
     func buildEnvironment() {
         guard let view = self.view else { return }
+        
+        let boxMask = CollisionGroup.all.subtracting(sphereGoup)
+        let sphereMask = CollisionGroup.all.subtracting(boxGroup)
+        
+        // Box will only collide with spehere and sphere will only collide with box:
+        // let boxMask = CollisionGroup.all.subtracting(boxGroup)
+        // let sphereMask = CollisionGroup.all.subtracting(sphereGoup)
         
         let anchor = AnchorEntity(plane: .horizontal)
         
         let box1 = ModelEntity(mesh: .generateBox(size: 0.2), materials: [SimpleMaterial(color: .green, isMetallic: false)])
         box1.generateCollisionShapes(recursive: true)
-        box1.collision = .init(shapes: [.generateBox(size: [0.2, 0.2, 0.2])], mode: .trigger, filter: .sensor)
+        box1.collision = .init(shapes: [.generateBox(size: [0.2, 0.2, 0.2])], mode: .trigger, filter: .init(group: boxGroup, mask: boxMask))
         
         let box2 = ModelEntity(mesh: .generateBox(size: 0.2), materials: [SimpleMaterial(color: .green, isMetallic: false)])
         box2.generateCollisionShapes(recursive: true)
-        box2.collision = .init(shapes: [.generateBox(size: [0.2, 0.2, 0.2])], mode: .trigger, filter: .sensor)
+        box2.collision = .init(shapes: [.generateBox(size: [0.2, 0.2, 0.2])], mode: .trigger, filter: .init(group: boxGroup, mask: boxMask))
         box2.position.z = 0.3
         
         let sphere1 = ModelEntity(mesh: .generateSphere(radius: 0.2), materials: [SimpleMaterial(color: .green, isMetallic: false)])
         sphere1.generateCollisionShapes(recursive: true)
-        sphere1.collision = .init(shapes: [.generateSphere(radius: 0.2)], mode: .trigger, filter: .sensor)
+        sphere1.collision = .init(shapes: [.generateSphere(radius: 0.2)], mode: .trigger, filter: .init(group: sphereGoup, mask: sphereMask))
         sphere1.position.x += 0.3
         
         let sphere2 = ModelEntity(mesh: .generateSphere(radius: 0.2), materials: [SimpleMaterial(color: .green, isMetallic: false)])
         sphere2.generateCollisionShapes(recursive: true)
-        sphere2.collision = .init(shapes: [.generateSphere(radius: 0.2)], mode: .trigger, filter: .sensor)
+        sphere2.collision = .init(shapes: [.generateSphere(radius: 0.2)], mode: .trigger, filter: .init(group: sphereGoup, mask: sphereMask))
         sphere2.position.x -= 0.3
         
         anchor.addChild(box1)
