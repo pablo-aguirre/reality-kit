@@ -22,6 +22,7 @@
 		6E68BAF02C44025D00BF4357 /* DSC_0171.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 6E68BAEA2C44025D00BF4357 /* DSC_0171.JPG */; };
 		6E68BAF12C44025D00BF4357 /* lola.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E68BAEB2C44025D00BF4357 /* lola.png */; };
 		6E68BAF22C44025D00BF4357 /* purple_flower.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E68BAEC2C44025D00BF4357 /* purple_flower.png */; };
+		6EC7BD132C45246D006E126E /* MovableEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC7BD122C45246D006E126E /* MovableEntity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		6E68BAEB2C44025D00BF4357 /* lola.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lola.png; sourceTree = "<group>"; };
 		6E68BAEC2C44025D00BF4357 /* purple_flower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = purple_flower.png; sourceTree = "<group>"; };
 		6E68BAF42C44028100BF4357 /* video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video.mp4; sourceTree = "<group>"; };
+		6EC7BD122C45246D006E126E /* MovableEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovableEntity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 				6E68BADF2C43C69300BF4357 /* robot.usdz */,
 				6E68BAE12C43CDF700BF4357 /* sneaker.usdz */,
 				6E68BAE32C43D0A400BF4357 /* LunarRover.reality */,
+				6EC7BD122C45246D006E126E /* MovableEntity.swift */,
 			);
 			path = RealityKitCourse;
 			sourceTree = "<group>";
@@ -193,6 +196,7 @@
 				6E68BACE2C439FFA00BF4357 /* AppDelegate.swift in Sources */,
 				6E68BADC2C43A01C00BF4357 /* Coordinator.swift in Sources */,
 				6E68BADE2C43A88D00BF4357 /* UIColor+Extensions.swift in Sources */,
+				6EC7BD132C45246D006E126E /* MovableEntity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
