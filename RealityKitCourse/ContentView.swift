@@ -18,17 +18,9 @@ struct ARViewContainer: UIViewRepresentable {
     
     func makeUIView(context: Context) -> ARView {
         let arView = ARView(frame: .zero)
-        arView.addGestureRecognizer(UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.handleTap)))
-        
-        let floorAnchor = AnchorEntity(plane: .horizontal)
-        let floorModel = ModelEntity(mesh: .generateBox(size: [1000, 0, 1000]), materials: [OcclusionMaterial()])
-        floorModel.physicsBody = .init(material: .generate(), mode: .static)
-        floorModel.generateCollisionShapes(recursive: true)
-        
-        floorAnchor.addChild(floorModel) 
-        arView.scene.addAnchor(floorAnchor)
         
         context.coordinator.view = arView
+        context.coordinator.buildEnvironment()
         return arView
     }
     
