@@ -19,15 +19,9 @@ struct ARViewContainer: UIViewRepresentable {
     
     func makeUIView(context: Context) -> ARView {
         let arView = ARView(frame: .zero)
-        let configuration = ARWorldTrackingConfiguration()
-        configuration.planeDetection = [.horizontal]
-        arView.session.run(configuration)
-        
-        arView.addGestureRecognizer(UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.handleTap)))
         
         context.coordinator.arView = arView
-        context.coordinator.setupUI()
-        arView.addCoachingOverlay()
+        context.coordinator.setupUI() 
         
         return arView
     }
